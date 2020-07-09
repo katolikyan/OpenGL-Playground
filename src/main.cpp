@@ -7,8 +7,12 @@
 #include "Renderer.hpp"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
+#include "VertexArray.hpp"
+#include "VertexBufferLayout.hpp"
+#include "Shader.hpp"
 
 
+/*
 struct ShaderProgramSource {
     std::string VertexShader;
     std::string FragmentShader;
@@ -78,6 +82,7 @@ static int createShader(const std::string& vertexShader, const std::string& frag
     
     return program;
 }
+*/
 
 
 
@@ -123,9 +128,10 @@ int main(void)
         2, 3, 0
     };
 
-    unsigned int vaoID;
-    glGenVertexArrays(1, &vaoID);
-    glBindVertexArray(vaoID);
+//    unsigned int vaoID;
+ //   glGenVertexArrays(1, &vaoID);
+ //   glBindVertexArray(vaoID);
+    VertexArray va;
 
     // vertex buffer
     VertexBuffer vb(positions, 4 * 2 * sizeof(float));
@@ -134,9 +140,13 @@ int main(void)
 //    glBindBuffer(GL_ARRAY_BUFFER, buffer);
 //    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
+    va.AddBuffer(vb, layout);
+
     // enabling buffer
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+    //glEnableVertexAttribArray(0);
+    //glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
     // index buffer
     IndexBuffer ib(indices, 6);
@@ -146,11 +156,20 @@ int main(void)
     //glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     // shaders
+    /*
     ShaderProgramSource source = ParseShader("shaders/basic.glsl");
     unsigned int shader = createShader(source.VertexShader, source.FragmentShader);
     glUseProgram(shader);
-
     int location = glGetUniformLocation(shader, "u_Color");       
+    */
+    Shader shader("shaders/basic.glsl");
+//    shader.Bind();
+
+ //   va.Unbind();
+ //   vb.Unbind();
+  //  ib.Unbind();
+  //  shader.Unbind();
+    Renderer renderer;
 
     float r = 0.0f;
     float increment = 0.02f;
@@ -159,13 +178,20 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
+        renderer.Clear();
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUniform4f(location, r, 0.1, 0.5, 1.0);
+        //glUniform4f(location, r, 0.1, 0.5, 1.0);
+        
+        shader.Bind();
+        shader.SetUniform4f("u_Color", r, 0.1, 0.5, 1.0);
 
-        glBindVertexArray(vaoID);
-        ib.Bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        //glBindVertexArray(vaoID);
+//        va.Bind();
+ //       ib.Bind();
+
+        renderer.Draw(va, ib, shader);
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 //        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         // Animation of color;
@@ -183,7 +209,7 @@ int main(void)
         glfwPollEvents();
     }
 
-    glDeleteProgram(shader);
+    //glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
