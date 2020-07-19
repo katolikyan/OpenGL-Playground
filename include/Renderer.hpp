@@ -11,7 +11,8 @@ class Renderer {
     ~Renderer(void);
 
     void Clear() const;
-    void Draw(const VertexArray& ca, const IndexBuffer& ib, const Shader& shader) const;
+    void DrawElements(const VertexArray& ca, const IndexBuffer& ib, const Shader& shader) const;
+    void DrawArrays(const VertexArray& ca, const Shader& shader, unsigned int count) const;
 
   private:
 };

@@ -2,6 +2,8 @@
 
 #include <string>
 #include <unordered_map>
+#include "Mat4.class.hpp"
+#include "../glm/glm.hpp"
 
 struct ShaderProgramSource {
     std::string VertexShader;
@@ -30,5 +32,10 @@ class Shader {
     void Unbind() const;
 
     // set uniforms
-    void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
+    void SetUniformMat4f(const std::string& name, glm::mat4 matrix);
+    void SetUniformMat4f(const std::string& name, Mat4 matrix);
+    void SetUniform1i(const std::string& name, int v0);
+    void SetUniform1f(const std::string& name, float v0);
+    void SetUniform4f(const std::string& name, \
+                      float v0, float v1, float v2, float v3);
 };

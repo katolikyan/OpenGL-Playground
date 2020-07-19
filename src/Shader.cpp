@@ -5,6 +5,7 @@
 #include <fstream>
 #include <GL/glew.h>
 #include <unordered_map>
+#include "Mat4.class.hpp"
 
 Shader::Shader(const std::string& filepath) : \
                 m_FilePath(filepath), m_RendererID(0) {
@@ -25,6 +26,21 @@ unsigned int Shader::GetUniformLocation(const std::string& name) {
     std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
   m_UniformLocationCache[name] = location;
   return location;
+}
+
+void Shader::SetUniformMat4f(const std::string& name, glm::mat4 matrix) {
+  glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FLOAT, &matrix[0][0]);
+}
+void Shader::SetUniformMat4f(const std::string& name, Mat4 matrix) {
+  glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FLOAT, &matrix[0]);
+}
+
+void Shader::SetUniform1i(const std::string& name, int v0) {
+  glUniform1i(GetUniformLocation(name), v0);
+}
+
+void Shader::SetUniform1f(const std::string& name, float v0) {
+  glUniform1f(GetUniformLocation(name), v0);
 }
 
 void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
@@ -78,25 +94,25 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 }
 
 ShaderProgramSource Shader::ParseShader(const std::string path) {
-    std::ifstream stream(path);
-    enum class ShaderType {
-        None = -1, Vertex =  0, Fragment = 1
-    };
+  std::ifstream stream(path);
+  enum class ShaderType {
+      None = -1, Vertex =  0, Fragment = 1
+  };
 
-    std::string line;
-    std::stringstream ss[2];
-    ShaderType type = ShaderType::None;
+  std::string line;
+  std::stringstream ss[2];
+  ShaderType type = ShaderType::None;
 
-    while(getline(stream, line)) {
-        if (line.find("#shader") != std::string::npos) {
-            if (line.find("vertex") != std::string::npos)
-                type = ShaderType::Vertex;
-            else if (line.find("fragment") != std::string::npos)
-                type = ShaderType::Fragment;
-        }
-        else {
-            ss[(int)type] << line << '\n';
-        }
-    }
-    return { ss[0].str(), ss[1].str() };
+  while(getline(stream, line)) {
+      if (line.find("#shader") != std::string::npos) {
+          if (line.find("vertex") != std::string::npos)
+              type = ShaderType::Vertex;
+          else if (line.find("fragment") != std::string::npos)
+              type = ShaderType::Fragment;
+      }
+      else {
+          ss[(int)type] << line << '\n';
+      }
+  }
+  return { ss[0].str(), ss[1].str() };
 }
