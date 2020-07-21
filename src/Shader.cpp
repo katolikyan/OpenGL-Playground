@@ -29,10 +29,10 @@ unsigned int Shader::GetUniformLocation(const std::string& name) {
 }
 
 void Shader::SetUniformMat4f(const std::string& name, glm::mat4 matrix) {
-  glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FLOAT, &matrix[0][0]);
+  glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }
 void Shader::SetUniformMat4f(const std::string& name, Mat4 matrix) {
-  glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FLOAT, &matrix[0]);
+  glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0]);
 }
 
 void Shader::SetUniform1i(const std::string& name, int v0) {

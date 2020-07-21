@@ -20,3 +20,12 @@ void Renderer::DrawArrays(const VertexArray& va, const Shader& shader, unsigned 
 void Renderer::Clear() const {
   glClear(GL_COLOR_BUFFER_BIT);
 }
+
+void Renderer::Clear(unsigned int flags[], unsigned int count) const {
+  for(unsigned int i = 0; i < count; i++)
+    glClear(flags[i]);
+}
+
+void Renderer::ClearColor(float r, float g, float b, float a) const {
+  glClearColor(r, g, b, a);
+}
