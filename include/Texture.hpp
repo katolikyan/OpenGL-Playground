@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __OBJ_VIEWER_INCLUDE_TEXTURE_CLASS_HPP__
+# define __OBJ_VIEWER_INCLUDE_TEXTURE_CLASS_HPP__
 
 #include <string>
 
@@ -21,3 +22,5 @@ class Texture {
     unsigned char* m_LocalBuffer;
     int m_Width, m_Height, m_BPP;
 };
+
+#endif

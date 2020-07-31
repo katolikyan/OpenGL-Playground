@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __OBJ_VIEWER_INCLUDE_VERTEXBUFFERLAYOUT_CLASS_HPP__
+# define __OBJ_VIEWER_INCLUDE_VERTEXBUFFERLAYOUT_CLASS_HPP__
 
 #include <vector>
 #include <GL/glew.h>
@@ -35,3 +36,5 @@ class VertexBufferLayout {
     unsigned int GetStride() const;
 
 };
+
+#endif

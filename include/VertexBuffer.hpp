@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __OBJ_VIEWER_INCLUDE_VERTEXBUFFER_CLASS_HPP__
+# define __OBJ_VIEWER_INCLUDE_VERTEXBUFFER_CLASS_HPP__
 
 class VertexBuffer
 {
@@ -12,3 +13,5 @@ class VertexBuffer
     void Bind() const;
     void Unbind() const;
 };
+
+#endif

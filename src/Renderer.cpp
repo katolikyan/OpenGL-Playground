@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include "Mesh.class.hpp"
 
 Renderer::Renderer() {}
 
@@ -9,6 +10,12 @@ void Renderer::DrawElements(const VertexArray& va, const IndexBuffer& ib, const 
   va.Bind();
   ib.Bind();
   glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void Renderer::DrawElements(const Mesh& mesh, const Shader& shader) const {
+  shader.Bind();
+  mesh.Bind();
+  glDrawElements(GL_TRIANGLES, mesh.GetCountIB(), GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::DrawArrays(const VertexArray& va, const Shader& shader, unsigned int count) const {

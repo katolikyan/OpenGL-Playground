@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef __OBJ_VIEWER_INCLUDE_INDEXBUFFER_CLASS_HPP__
+# define __OBJ_VIEWER_INCLUDE_INDEXBUFFER_CLASS_HPP__
 class IndexBuffer
 {
   private:
@@ -15,3 +15,5 @@ class IndexBuffer
 
     inline unsigned int GetCount() const { return m_Count; }
 };
+
+#endif
