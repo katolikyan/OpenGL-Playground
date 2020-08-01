@@ -15,6 +15,5 @@ $> ./playground
 > when camera is locked you are able to resize the window
 
 
-Level 1                    |  Level 2                  
-:-------------------------:|:-------------------------:
 ![](./media/_teapot.gif)  |  ![](./media/_cubes.gif)
+:-------------------------:|:-------------------------:
