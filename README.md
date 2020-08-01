@@ -1,5 +1,5 @@
 # OpenGL Playground
-This is just my sendbox to explore OpenGL.
+This is just my sandbox to explore OpenGL.
 
 ## Usage
 ```bash
@@ -12,7 +12,7 @@ $> ./playground
 `r` - Reset __camera__ position
 
 `u` - Lock / unlock __camera__ 
-> when camera is locked you are able to resize the window
+> when the camera is locked you are able to resize the window
 
 
 ![](./media/_teapot.gif)  |  ![](./media/_cubes.gif)
