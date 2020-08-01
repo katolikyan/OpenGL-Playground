@@ -18,6 +18,7 @@
 #include "Vec3.class.hpp"
 #include "Camera.class.hpp"
 #include "Mesh.class.hpp"
+#include "ObjLoad.class.hpp"
 
 #include "../glm/glm.hpp"
 #include "../glm/ext.hpp"
@@ -64,13 +65,20 @@ void processInput(GLFWwindow *window, Camera &cam, float deltaTime) {
             cam.MoveRight(deltaTime);
     }
     // Swap lock mode
-    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
         cam.SwapLock();
         // unlock/lock mouse
         if (cam.IsLocked())
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         else
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+    // Reset view
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+        cam.SetLookAt(glm::vec3(0.0f, 0.0f, 3.0f), \
+                      glm::vec3(0.0f, 0.0f, -1.0f), \
+                      glm::vec3(0.0f, 1.0f, 0.0f));
+    }
 }
 
 int main(void)
@@ -122,6 +130,10 @@ int main(void)
 
     Mesh testmesh(verts, indxs, txts);
 
+    ObjLoad testobj("resourses/testCube.obj");
+    ObjLoad testobj2("resourses/testTeapot.obj");
+    Mesh testCube(testobj.GetVertices());
+    Mesh testTeapot(testobj2.GetVertices());
     // blending for Alpha channel and .png pics
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -130,7 +142,7 @@ int main(void)
     Shader shader("shaders/basic_mesh.glsl");
     shader.Bind();
 
-    Texture texture("resourses/uv2.png");
+    Texture texture("resourses/box.png");
     texture.Bind();
     shader.SetUniform1i("u_Texture", 0);
 
@@ -175,10 +187,13 @@ int main(void)
         glm::mat4 proj;
         proj = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
         shader.SetUniformMat4f("u_MVP", proj * cam01.GetView() * model);
-        shader.SetUniform4f("u_Color", r, 0.1, 0.5, 1.0);
+        //shader.SetUniform4f("u_Color", r, 0.1, 0.5, 1.0);
 
         // Rendering
-        renderer.DrawElements(testmesh, shader);
+        //renderer.DrawElements(testmesh, shader);
+        testmesh.Draw(shader);
+        testCube.Draw(shader);
+        testTeapot.Draw(shader);
 
 
         // Animation of color;

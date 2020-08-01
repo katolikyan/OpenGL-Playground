@@ -239,7 +239,7 @@ int main(void)
   //  ib.Unbind();
   //  shader.Unbind();
 
-    Texture texture("resourses/uv2.png");
+    Texture texture("resourses/box.png");
     texture.Bind();
     shader.SetUniform1i("u_Texture", 0);
 

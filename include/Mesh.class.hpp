@@ -27,11 +27,13 @@ class Mesh {
 
   public:
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture> textures);
+    Mesh(std::vector<Vertex> vertices);
     Mesh(const Mesh& other);
     ~Mesh();
     Mesh& operator=(const Mesh& other);
 
     void Bind() const;
+    void Draw(const Shader& shader) const;
     unsigned int GetCountIB() const;
     std::vector<Vertex>        m_vertices;
     std::vector<unsigned int>   m_indices;
